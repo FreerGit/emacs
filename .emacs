@@ -14,22 +14,29 @@
 (package-initialize)
 
 ;; Install
+(package-install-helper 'tree-sitter)         ;; tree sitter
+(package-install-helper 'tree-sitter-langs)   ;; 
 (package-install-helper 'gruber-darker-theme) ;; Tsoding theme
 (package-install-helper 'cider)               ;; cider, clj REPL
-;;(package-install-helper 'clojure-ts-mode)     ;; tree-sitter support, clj
+(package-install-helper 'clojure-ts-mode)	  ;; clj major mode, treesitter 
 (package-install-helper 'magit)               ;; magic git
 
+;; --- Clojure specific setup ---
 ;; Auto start the REPL on clojure mode
 (add-hook 'clojure-mode-hook 'cider-mode)
 (add-hook 'clojure-mode-hook 'cider-repl-autostart-mode)
-
+;; --- Clojure setup END ---
 
 ;; UI cleanup
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
-
+									
 ;; UI extensions
+(global-font-lock-mode 1)				
 (load-theme 'gruber-darker t)
-(global-display-line-numbers-mode t)  ;; Enable line numbers
-(setq display-line-numbers-mode 'relative)  ;; relative line nums
+(global-display-line-numbers-mode 1)  ;; Enable line numbers
+(setq display-line-numbers-type 'relative)
+
+;; Tell emacs to shut up
+(setq ring-bell-function 'ignore)
