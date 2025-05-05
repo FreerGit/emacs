@@ -24,16 +24,16 @@
 
 ;; Global hooks
 (require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-
+(global-company-mode 1)
 ;; --- Clojure specific setup ---
 ;; Auto start the REPL on clojure mode
 (add-hook 'clojure-ts-mode-hook #'cider-mode)
-(add-hook 'clojure-ts-mode-hook #'eldoc-box-hover-mode)
 (add-hook 'cider-mode-hook #'eldoc-mode)
 (add-hook 'clojure-ts-mode-hook
           (lambda ()
-            (add-hook 'before-save-hook #'cider-format-buffer nil t)))
+            (add-hook 'before-save-hook #'cider-format-buffer t t)))
+(setq cider-repl-use-pretty-printing t)
+
 ;; --- Clojure setup END ---
 
 ;; UI cleanup
