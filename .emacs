@@ -21,18 +21,38 @@
 (package-install-helper 'clojure-ts-mode)     ;; clj major mode, treesitter 
 (package-install-helper 'magit)               ;; magic git
 (package-install-helper 'company)             ;; complete anything
+(package-install-helper 'flycheck-clj-kondo)  ;; clj-kondo linter
 
 ;; Global hooks
 (require 'company)
 (global-company-mode 1)
+
 ;; --- Clojure specific setup ---
 ;; Auto start the REPL on clojure mode
+;; Prefer clojure-ts-mode over clojure-mode
+(add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
+(add-to-list 'major-mode-remap-alist '(clojurescript-mode . clojure-ts-mode))
+(add-to-list 'major-mode-remap-alist '(clojurec-mode . clojure-ts-mode))
 (add-hook 'clojure-ts-mode-hook #'cider-mode)
+(add-hook 'clojure-ts-mode-hook #'flycheck-mode)
 (add-hook 'cider-mode-hook #'eldoc-mode)
+
 (add-hook 'clojure-ts-mode-hook
           (lambda ()
             (add-hook 'before-save-hook #'cider-format-buffer t t)))
 (setq cider-repl-use-pretty-printing t)
+
+(with-eval-after-load 'clojure-ts-mode
+  (require 'flycheck-clj-kondo)
+  (flycheck-define-checker clojure-ts-clj-kondo
+    "A Clojure syntax and lint checker using clj-kondo."
+    :command ("clj-kondo" "--lint" source)
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end)
+     (error line-start (file-name) ":" line ":" column ": error: " (message) line-end))
+    :modes (clojure-ts-mode clojurescript-ts-mode clojurec-ts-mode))
+
+  (add-to-list 'flycheck-checkers 'clojure-ts-clj-kondo))
 
 ;; --- Clojure setup END ---
 
