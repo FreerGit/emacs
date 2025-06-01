@@ -66,6 +66,7 @@
 (load-theme 'gruber-darker t)
 (global-display-line-numbers-mode 1)  ;; Enable line numbers
 (setq display-line-numbers-type 'relative)
+(add-hook 'after-change-major-mode-hook (lambda () (text-scale-set -2))) ;; default zoom
 
 ;; Tell emacs to shut up
 (setq ring-bell-function 'ignore)
