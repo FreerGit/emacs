@@ -27,13 +27,19 @@
   :hook (after-init . global-company-mode))
 
 ;; Load lang specific configs
-(setq my/config-root
-      (file-name-directory (file-truename buffer-file-name)))
+(defvar config-dir
+  (file-name-directory (file-truename load-file-name)))
 
-(add-to-list 'load-path (expand-file-name "lang-specific" my/config-root))
-(load (expand-file-name "lang-specific/clojure.el" my/config-root))
-(load (expand-file-name "lang-specific/rust.el" my/config-root))
+;; Set up the lang-specific directory path
+(defvar lang-specific-dir
+  (expand-file-name "lang-specific" config-dir))
 
+;; Add the lang-specific directory to load-path
+(add-to-list 'load-path lang-specific-dir)
+
+;; Now you can load the files
+(load-file (expand-file-name "clojure.el" lang-specific-dir))
+(load-file (expand-file-name "rust.el" lang-specific-dir))
 
 ;; UI cleanup
 (menu-bar-mode 0)
