@@ -1,4 +1,7 @@
-# Swap left alt and left ctrl
+# Install
+Download the repo and symlink the init.el file from .emacs.d directory
+
+## Swap left alt and left ctrl
 Use your left thumb for ctrl (C-) and right thumb for alt (M-)
 
 ```console
