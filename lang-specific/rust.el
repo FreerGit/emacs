@@ -1,10 +1,10 @@
 (use-package rustic
-  :ensure
+  :ensure t
   :hook (rustic-mode . lsp)
   :config
   :custom
   (rustic-rustfmt-config-alist '((edition . "2024")))
-  (setq rustic-format-on-save t))
+  (rustic-format-on-save t))
 
 (use-package lsp-mode
   :ensure
@@ -33,7 +33,7 @@
   :commands lsp-ui-mode
   :custom
   (lsp-ui-peek-always-show t)
-  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-sideline-show-hover nil)
   (lsp-ui-doc-enable nil))
 
 (use-package toml-mode :ensure)

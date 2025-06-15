@@ -75,3 +75,25 @@
 (keymap-global-set "M-]" 'forward-paragraph)
 (keymap-global-set "M-{" 'mark-backward-paragraph)
 (keymap-global-set "M-}" 'mark-forward-paragraph)
+
+;; Saner word-by-word forward/backward
+(defun my-forward-same-syntax (arg)
+  "Move forward by ARG units of same syntax."
+  (interactive "p")
+  (forward-same-syntax arg))
+
+(defun my-forward-same-syntax-mark (arg)
+  "Move forward by ARG units of same syntax, extending the selection."
+  (interactive "p")
+  ;; If mark is not active, activate it at point before moving
+  (unless (region-active-p)
+    (set-mark (point)))
+  (forward-same-syntax arg))
+
+(global-set-key (kbd "M-f") #'my-forward-same-syntax)
+(global-set-key (kbd "M-b") (lambda () (interactive) (my-forward-same-syntax -1)))
+(global-set-key (kbd "M-F") #'my-forward-same-syntax-mark)
+(global-set-key (kbd "M-B") (lambda () (interactive) (my-forward-same-syntax-mark -1)))
+
+;; I just got DESTROYED by accidentally hitting this, not again.
+(global-unset-key (kbd "C-x C-c"))
