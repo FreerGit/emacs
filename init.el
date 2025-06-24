@@ -24,7 +24,8 @@
 
 ;; Company (autocomplete)
 (use-package company
-  :hook (after-init . global-company-mode))
+ :init
+ (global-company-mode))
 
 ;; Load lang specific configs
 (defvar config-dir
