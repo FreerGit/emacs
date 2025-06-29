@@ -41,6 +41,7 @@
 ;; Now you can load the files
 (load-file (expand-file-name "clojure.el" lang-specific-dir))
 (load-file (expand-file-name "rust.el" lang-specific-dir))
+(load-file (expand-file-name "python.el" lang-specific-dir))
 
 ;; UI cleanup
 (menu-bar-mode 0)
