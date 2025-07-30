@@ -1,12 +1,15 @@
 (use-package c++-ts-mode
   :ensure nil  ; built-in in Emacs 29+
-  :hook (c++-ts-mode . lsp)
-  :mode ("\\.cpp\\'" "\\.cxx\\'" "\\.cc\\'" "\\.C\\'")
+  :mode ("\\.cpp\\'" "\\.cxx\\'" "\\.cc\\'" "\\.C\\'" "\\.h\\'" "\\.hpp\\'")
   :config
   ;; Format on save (requires clang-format)
-  (add-hook 'c++-ts-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook 'clang-format-buffer nil 'local))))
+  :hook ((c++-ts-mode . lsp)
+	 (c++-ts-mode . (lambda ()
+              (add-hook 'before-save-hook #'lsp-format-buffer nil t)))))
+            
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+
 
 (use-package clang-format
   :ensure t
@@ -45,3 +48,8 @@
 (use-package modern-cpp-font-lock
   :ensure t
   :hook (c++-mode . modern-c++-font-lock-mode))
+
+(use-package cmake-ts-mode
+  :ensure nil  ; built-in in Emacs 29+
+  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'")
+  :hook (cmake-ts-mode . (lambda () (setq indent-tabs-mode nil))))
