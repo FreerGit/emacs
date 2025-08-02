@@ -27,6 +27,14 @@
  :init
  (global-company-mode))
 
+;; Multiple cursors
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->"         . mc/mark-next-like-this)
+         ("C-<"         . mc/mark-previous-like-this)
+         ("C-c C-<"     . mc/mark-all-like-this)))
+
 ;; Load lang specific configs
 (defvar config-dir
   (file-name-directory (file-truename load-file-name)))
@@ -99,3 +107,20 @@
 
 ;; I just got DESTROYED by accidentally hitting this, not again.
 (global-unset-key (kbd "C-x C-c"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(cider clang-format clojure-ts-mode color-theme-sanityinc-tomorrow
+	   company doom-themes flycheck-clj-kondo grip-mode
+	   gruber-darker-theme lsp-ui magit modern-cpp-font-lock
+	   multiple-cursors pyvenv rustic toml-mode tree-sitter-langs
+	   yasnippet-snippets)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
